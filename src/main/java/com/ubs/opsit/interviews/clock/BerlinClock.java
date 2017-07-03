@@ -9,11 +9,12 @@ public enum BerlinClock implements Clock {
 	private ClockRow[] rows = new ClockRow[5];
 
 	private void setSeconds(Integer seconds) {
-		if (seconds > 0 && (Math.ceil(seconds / 2)) % 2 == 0 || seconds > 58)
-			setRowLamp(1, rows[0], Switch.OFF);
-		else
+		if ((seconds & 1) == 0)
 			setRowLamp(1, rows[0], Switch.ON);
+		else
+			setRowLamp(1, rows[0], Switch.OFF);
 	}
+	
 
 	private void setMinutes(Integer minutes) {
 		setRowLamp(minutes / 5, rows[3], Switch.ON);
@@ -53,20 +54,23 @@ public enum BerlinClock implements Clock {
 	}
 
 	private void defaultTime() {
-		RectangularLamp secLight = new RectangularLamp(Color.Y);
-		rows[0] = new ClockRow(secLight);
-		RectangularLamp[] rectangularLightRow1 = new RectangularLamp[4];
-		rectangularLightRow1[0] = new RectangularLamp(Color.R);
-		rectangularLightRow1[1] = new RectangularLamp(Color.R);
-		rectangularLightRow1[2] = new RectangularLamp(Color.R);
-		rectangularLightRow1[3] = new RectangularLamp(Color.R);
-		rows[1] = new ClockRow(rectangularLightRow1);
-		RectangularLamp[] rectangularLightRow2 = new RectangularLamp[4];
-		rectangularLightRow2[0] = new RectangularLamp(Color.R);
-		rectangularLightRow2[1] = new RectangularLamp(Color.R);
-		rectangularLightRow2[2] = new RectangularLamp(Color.R);
-		rectangularLightRow2[3] = new RectangularLamp(Color.R);
-		rows[2] = new ClockRow(rectangularLightRow2);
+		row0();
+		row1();
+		row2();
+		row3();
+		row4();
+	}
+
+	private void row4() {
+		RectangularLamp[] rectangularLightRow4 = new RectangularLamp[4];
+		rectangularLightRow4[0] = new RectangularLamp(Color.Y);
+		rectangularLightRow4[1] = new RectangularLamp(Color.Y);
+		rectangularLightRow4[2] = new RectangularLamp(Color.Y);
+		rectangularLightRow4[3] = new RectangularLamp(Color.Y);
+		rows[4] = new ClockRow(rectangularLightRow4);
+	}
+
+	private void row3() {
 		RectangularLamp[] rectangularLightRow3 = new RectangularLamp[11];
 		rectangularLightRow3[0] = new RectangularLamp(Color.Y);
 		rectangularLightRow3[1] = new RectangularLamp(Color.Y);
@@ -80,12 +84,29 @@ public enum BerlinClock implements Clock {
 		rectangularLightRow3[9] = new RectangularLamp(Color.Y);
 		rectangularLightRow3[10] = new RectangularLamp(Color.Y);
 		rows[3] = new ClockRow(rectangularLightRow3);
-		RectangularLamp[] rectangularLightRow4 = new RectangularLamp[4];
-		rectangularLightRow4[0] = new RectangularLamp(Color.Y);
-		rectangularLightRow4[1] = new RectangularLamp(Color.Y);
-		rectangularLightRow4[2] = new RectangularLamp(Color.Y);
-		rectangularLightRow4[3] = new RectangularLamp(Color.Y);
-		rows[4] = new ClockRow(rectangularLightRow4);
+	}
+
+	private void row2() {
+		RectangularLamp[] rectangularLightRow2 = new RectangularLamp[4];
+		rectangularLightRow2[0] = new RectangularLamp(Color.R);
+		rectangularLightRow2[1] = new RectangularLamp(Color.R);
+		rectangularLightRow2[2] = new RectangularLamp(Color.R);
+		rectangularLightRow2[3] = new RectangularLamp(Color.R);
+		rows[2] = new ClockRow(rectangularLightRow2);
+	}
+
+	private void row1() {
+		RectangularLamp[] rectangularLightRow1 = new RectangularLamp[4];
+		rectangularLightRow1[0] = new RectangularLamp(Color.R);
+		rectangularLightRow1[1] = new RectangularLamp(Color.R);
+		rectangularLightRow1[2] = new RectangularLamp(Color.R);
+		rectangularLightRow1[3] = new RectangularLamp(Color.R);
+		rows[1] = new ClockRow(rectangularLightRow1);
+	}
+
+	private void row0() {
+		RectangularLamp secLight = new RectangularLamp(Color.Y);
+		rows[0] = new ClockRow(secLight);
 	}
 
 	public boolean setTime(String aTime) {
